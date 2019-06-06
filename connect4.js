@@ -61,12 +61,11 @@ function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
 
   for (let column = 0; column < HEIGHT; column++){
-    console.log(`we're looping`)
-    if ( board[board.length-1-column][x]=== null){
+    if (board[board.length-1-column][x]=== null){
       return board.length-1-column
     }
       
-    }
+  }
   
   return null;
 }
@@ -77,7 +76,12 @@ function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   let piece = document.createElement("div");
   piece.classList.add("piece");
-  piece.classList.add("p1");
+  if (currPlayer === 1){
+    piece.classList.add('p1');
+  } else {
+    piece.classList.add('p2');
+  }
+  
   let cell = document.getElementById(`${y}-${x}`);
   cell.appendChild(piece);
 }
@@ -91,14 +95,12 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
-  console.log("function ran")
   // get x from ID of clicked cell
   let x = +evt.target.id;
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
   if (y === null) {
-    console.log("about to return")
     return;
   }
 
@@ -117,6 +119,12 @@ function handleClick(evt) {
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  if (currPlayer === 1) {
+    currPlayer = 2;
+  } else {
+    currPlayer = 1;
+  }
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
