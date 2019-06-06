@@ -90,6 +90,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -106,15 +107,20 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-
   placeInTable(y, x);
   board[y][x] = currPlayer;
-  // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
 
+  
   // check for win
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    return endGame(`Player ${currPlayer} is the Connect4 GrandMasterChampion!`);
+  }
+   // check for tie
+  // TODO: check if all cells in board are filled; if so call, call endGame
+  let isTie = board.every(row => row.every(cell => cell !== null)); 
+
+  if (isTie){
+      return endGame(`Nobody wins :(`);
   }
 
   // switch players
