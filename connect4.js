@@ -16,7 +16,6 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  let board =[];
   for (let row = 0; row < HEIGHT; row++){
     let rowArray = [];
     for (let column = 0; column < WIDTH; column++){
@@ -60,15 +59,27 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+
+  for (let column = 0; column < HEIGHT; column++){
+    console.log(`we're looping`)
+    if ( board[board.length-1-column][x]=== null){
+      return board.length-1-column
+    }
+      
+    }
+  
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML board */
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
-  let pieceElement = document.createElement("div");
-  pieceElement.className = "piece p1"
+  let piece = document.createElement("div");
+  piece.classList.add("piece");
+  piece.classList.add("p1");
+  let cell = document.getElementById(`${y}-${x}`);
+  cell.appendChild(piece);
 }
 
 /** endGame: announce game end */
@@ -80,19 +91,22 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
+  console.log("function ran")
   // get x from ID of clicked cell
   let x = +evt.target.id;
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
   if (y === null) {
+    console.log("about to return")
     return;
   }
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  placeInTable(y, x);
 
+  placeInTable(y, x);
+  board[y][x] = currPlayer;
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
 
